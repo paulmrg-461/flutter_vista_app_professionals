@@ -6,11 +6,12 @@ class ServiceRequestProvider {
   static CollectionReference serviceRequests =
       FirebaseFirestore.instance.collection('serviceRequests');
 
-  static Stream<QuerySnapshot<ServiceRequestModel>> getAllServiceRequests() =>
+  static Stream<QuerySnapshot<ServiceRequestModel>> getAllServiceRequests(
+          String profession) =>
       serviceRequests
           .where(
             'type',
-            isEqualTo: 'Administradores',
+            isEqualTo: profession,
           )
           .orderBy('dateTime', descending: true)
           .withConverter<ServiceRequestModel>(

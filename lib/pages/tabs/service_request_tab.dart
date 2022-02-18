@@ -17,7 +17,7 @@ class ServiceRequestTab extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xff1B1B1B),
         body: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, top: 32),
+          padding: const EdgeInsets.only(left: 12, right: 12, top: 26),
           child: Column(
             children: [
               Row(
@@ -39,10 +39,11 @@ class ServiceRequestTab extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 32.0,
+                height: 22.0,
               ),
               StreamBuilder<QuerySnapshot<ServiceRequestModel>>(
-                stream: ServiceRequestProvider.getAllServiceRequests(),
+                stream: ServiceRequestProvider.getAllServiceRequests(
+                    professionalModel!.profession!),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot<ServiceRequestModel>>
                         snapshot) {
@@ -75,18 +76,40 @@ class ServiceRequestTab extends StatelessWidget {
                   }
 
                   if (snapshot.hasData) {
-                    return Expanded(
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        children: snapshot.data!.docs.map(
-                            (DocumentSnapshot<ServiceRequestModel> document) {
-                          ServiceRequestModel serviceRequestModel =
-                              document.data()!;
-                          return ServiceRequestListItem(
-                              serviceRequestModel: serviceRequestModel);
-                        }).toList(),
-                      ),
-                    );
+                    final List<ServiceRequestListItem> requestsList = snapshot
+                        .data!.docs
+                        .map((DocumentSnapshot<ServiceRequestModel> document) {
+                      ServiceRequestModel serviceRequestModel =
+                          document.data()!;
+                      return ServiceRequestListItem(
+                          serviceRequestModel: serviceRequestModel);
+                    }).toList();
+
+                    if (requestsList.isEmpty) {
+                      return Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 22, vertical: 36),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            color: Colors.white10,
+                            borderRadius: BorderRadius.circular(22)),
+                        child: Text(
+                            'No hay solicitudes disponibles para ${professionalModel!.profession}.',
+                            textAlign: TextAlign.justify,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                // letterSpacing: 0.4,
+                                fontWeight: FontWeight.w400)),
+                      );
+                    } else {
+                      Expanded(
+                        child: ListView(
+                            physics: const BouncingScrollPhysics(),
+                            children: requestsList),
+                      );
+                    }
                   }
                   return const Center(
                     child: CircularProgressIndicator(

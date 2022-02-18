@@ -108,20 +108,66 @@ class ProfileTab extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                      tooltip: 'Cerrar sesión',
-                      onPressed: () => _userProvider.logout().then((value) => value
-                          ? Navigator.pushReplacementNamed(context, 'login')
-                          : CustomAlertDialog().showCustomDialog(
-                              context,
-                              'Ha ocurrido un error',
-                              'Ha ocurrido un error al cerrar sesión, por favor intente nuevamente.',
-                              'Aceptar')),
+                  PopupMenuButton(
+                      tooltip: 'Acciones',
                       icon: const Icon(
-                        Icons.logout_rounded,
+                        Icons.more_horiz,
+                        size: 38,
                         color: Color(0xffD6BA5E),
-                        size: 36,
-                      ))
+                      ),
+                      onSelected: (value) {
+                        switch (value) {
+                          case 0:
+                            _userProvider.logout().then((value) => value
+                                ? Navigator.pushReplacementNamed(
+                                    context, 'login')
+                                : CustomAlertDialog().showCustomDialog(
+                                    context,
+                                    'Ha ocurrido un error',
+                                    'Ha ocurrido un error al cerrar sesión, por favor intente nuevamente.',
+                                    'Aceptar'));
+                            break;
+                          case 1:
+                            Navigator.pushNamed(context, 'about');
+                            break;
+                          default:
+                            print(value);
+                        }
+                      },
+                      itemBuilder: (_) => [
+                            PopupMenuItem(
+                                value: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: const [
+                                    Icon(
+                                      Icons.logout_rounded,
+                                      size: 20,
+                                      color: Colors.black87,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text('Cerrar sesión'),
+                                  ],
+                                )),
+                            PopupMenuItem(
+                                value: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: const [
+                                    Icon(
+                                      Icons.developer_mode_rounded,
+                                      size: 20,
+                                      color: Colors.black87,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text('Acerca de'),
+                                  ],
+                                )),
+                          ]),
                 ],
               ),
             ],

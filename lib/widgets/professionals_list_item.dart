@@ -14,7 +14,6 @@ class ProfessionalsListItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 26, right: 22),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.78,
-        // margin: const EdgeInsets.symmetric(vertical: 22, horizontal: 12),
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 22),
         decoration: BoxDecoration(boxShadow: <BoxShadow>[
           BoxShadow(
@@ -152,7 +151,10 @@ class ProfessionalsListItem extends StatelessWidget {
             ),
             const Padding(
               padding: EdgeInsets.only(bottom: 4.0),
-              child: Divider(color: Color(0xffD6BA5E)),
+              child: Divider(
+                color: Color(0xffD6BA5E),
+                thickness: 1,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -291,7 +293,7 @@ class ProfessionalsListItem extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      '${professionalModel!.registerDate!.day.toString().toString().padLeft(2, '0')}/${professionalModel!.registerDate!.month.toString().padLeft(2, '0')}/${professionalModel!.registerDate!.year.toString()}',
+                      '${professionalModel!.registerDate!.day.toString().padLeft(2, '0')}/${professionalModel!.registerDate!.month.toString().padLeft(2, '0')}/${professionalModel!.registerDate!.year.toString()}',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 18,

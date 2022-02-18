@@ -15,7 +15,7 @@ class ProfessionalsTab extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xff1B1B1B),
         body: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, top: 32),
+          padding: const EdgeInsets.only(left: 12, right: 12, top: 26),
           child: Column(
             children: [
               Row(
@@ -40,7 +40,7 @@ class ProfessionalsTab extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 32.0,
+                height: 22.0,
               ),
               StreamBuilder<QuerySnapshot<ProfessionalModel>>(
                 stream: ProfessionalsProvider.getAllProfessionals(),
@@ -89,31 +89,36 @@ class ProfessionalsTab extends StatelessWidget {
                             .where((professional) => !professional.isEnable!)
                             .toList();
                     return Expanded(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              children: activeProfessionals
-                                  .map((ProfessionalModel professional) =>
-                                      ProfessionalsListItem(
-                                          professionalModel: professional))
-                                  .toList(),
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.42,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                children: activeProfessionals
+                                    .map((ProfessionalModel professional) =>
+                                        ProfessionalsListItem(
+                                            professionalModel: professional))
+                                    .toList(),
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              children: inactiveProfessionals
-                                  .map((ProfessionalModel professional) =>
-                                      ProfessionalsListItem(
-                                          professionalModel: professional))
-                                  .toList(),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.42,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                children: inactiveProfessionals
+                                    .map((ProfessionalModel professional) =>
+                                        ProfessionalsListItem(
+                                            professionalModel: professional))
+                                    .toList(),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   }

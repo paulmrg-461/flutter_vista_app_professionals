@@ -48,7 +48,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: containerHeight,
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
           child: Row(
             mainAxisAlignment: mainAxisAlignment,
             children: items.map((item) {
@@ -100,8 +100,8 @@ class _ItemWidget extends StatelessWidget {
       selected: isSelected,
       child: AnimatedContainer(
         width: isSelected
-            ? MediaQuery.of(context).size.width * 0.36
-            : MediaQuery.of(context).size.width * 0.15,
+            ? MediaQuery.of(context).size.width * 0.34
+            : MediaQuery.of(context).size.width * 0.13,
         height: double.maxFinite,
         duration: animationDuration,
         curve: curve,
@@ -115,8 +115,8 @@ class _ItemWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           child: Container(
             width: isSelected
-                ? MediaQuery.of(context).size.width * 0.36
-                : MediaQuery.of(context).size.width * 0.15,
+                ? MediaQuery.of(context).size.width * 0.34
+                : MediaQuery.of(context).size.width * 0.13,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,

@@ -13,7 +13,7 @@ class UsersTab extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xff1B1B1B),
         body: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, top: 32),
+          padding: const EdgeInsets.only(left: 12, right: 12, top: 26),
           child: Column(
             children: [
               Row(
@@ -35,7 +35,7 @@ class UsersTab extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 32.0,
+                height: 22.0,
               ),
               StreamBuilder<QuerySnapshot<UserModel>>(
                 stream: UsersProvider.getAllUsers(),
@@ -79,29 +79,34 @@ class UsersTab extends StatelessWidget {
                     final List<UserModel> inactiveUsers =
                         allUsers.where((user) => !user.isEnable!).toList();
                     return Expanded(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              children: activeUsers
-                                  .map((UserModel user) =>
-                                      UsersListItem(userModel: user))
-                                  .toList(),
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                children: activeUsers
+                                    .map((UserModel user) =>
+                                        UsersListItem(userModel: user))
+                                    .toList(),
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              children: inactiveUsers
-                                  .map((UserModel user) =>
-                                      UsersListItem(userModel: user))
-                                  .toList(),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                children: inactiveUsers
+                                    .map((UserModel user) =>
+                                        UsersListItem(userModel: user))
+                                    .toList(),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   }

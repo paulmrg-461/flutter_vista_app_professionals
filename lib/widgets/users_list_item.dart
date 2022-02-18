@@ -77,7 +77,6 @@ class UsersListItem extends StatelessWidget {
                     onSelected: (value) {
                       switch (value) {
                         case 0:
-                          print('Mira mama me aplastaron el more');
                           UsersProvider.changeUserStatus(
                               userModel!.isEnable! ? 'isEnabled' : 'isDisabled',
                               userModel!.email!);
@@ -176,7 +175,7 @@ class UsersListItem extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      '${userModel!.registerDate!.day.toString().toString().padLeft(2, '0')}/${userModel!.registerDate!.month.toString().padLeft(2, '0')}/${userModel!.registerDate!.year.toString()}',
+                      '${userModel!.registerDate!.day.toString().padLeft(2, '0')}/${userModel!.registerDate!.month.toString().padLeft(2, '0')}/${userModel!.registerDate!.year.toString()}',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 18,
@@ -187,6 +186,61 @@ class UsersListItem extends StatelessWidget {
                 ),
               ),
             ),
+            userModel!.isEnable!
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 6.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.check_circle_outline_outlined,
+                          color: Color(0xffD6BA5E),
+                          size: 22,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          child: Text(
+                            'Activo',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white.withOpacity(0.85),
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(top: 6.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.block,
+                          color: Color(0xffD6BA5E),
+                          size: 22,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          child: Text(
+                            'Inactivo',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white.withOpacity(0.85),
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
             Padding(
               padding: const EdgeInsets.only(top: 6.0),
               child: Row(

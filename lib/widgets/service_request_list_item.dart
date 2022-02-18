@@ -58,7 +58,7 @@ class ServiceRequestListItem extends StatelessWidget {
                           fontWeight: FontWeight.w400),
                     ),
                     Text(
-                      '${serviceRequestModel!.dateTime!}',
+                      '${serviceRequestModel!.dateTime!.day.toString().padLeft(2, '0')}/${serviceRequestModel!.dateTime!.month.toString().padLeft(2, '0')}/${serviceRequestModel!.dateTime!.year.toString()} - ${serviceRequestModel!.dateTime!.hour.toString().padLeft(2, '0')}:${serviceRequestModel!.dateTime!.minute.toString().padLeft(2, '0')}',
                       style: TextStyle(
                           fontSize: 14,
                           color: Colors.white.withOpacity(0.85),
