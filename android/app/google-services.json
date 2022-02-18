@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "546645734157",
+    "project_id": "grupo-vista-mobile",
+    "storage_bucket": "grupo-vista-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546645734157:android:ba92efea1908191c3b7644",
+        "android_client_info": {
+          "package_name": "co.devpaul.professionals_grupo_vista_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546645734157-ftef8ilvdcg31dhp74s68rk16d3fmbmq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.devpaul.professionals_grupo_vista_app",
+            "certificate_hash": "c39e7a9c31b7772a9af0401696ce4abc67cb422a"
+          }
+        },
+        {
+          "client_id": "546645734157-td1ukgm8iv2vdm8d8tfefksv8gopk5p8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBL8PE_qgt96TpEyhBHWap6z63G9H-Z3vU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546645734157-td1ukgm8iv2vdm8d8tfefksv8gopk5p8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
