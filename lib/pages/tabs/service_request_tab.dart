@@ -82,7 +82,9 @@ class ServiceRequestTab extends StatelessWidget {
                       ServiceRequestModel serviceRequestModel =
                           document.data()!;
                       return ServiceRequestListItem(
-                          serviceRequestModel: serviceRequestModel);
+                        serviceRequestModel: serviceRequestModel,
+                        professionalModel: professionalModel,
+                      );
                     }).toList();
 
                     if (requestsList.isEmpty) {
@@ -104,7 +106,7 @@ class ServiceRequestTab extends StatelessWidget {
                                 fontWeight: FontWeight.w400)),
                       );
                     } else {
-                      Expanded(
+                      return Expanded(
                         child: ListView(
                             physics: const BouncingScrollPhysics(),
                             children: requestsList),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:professional_grupo_vista_app/providers/professionals_provider.dart';
 import 'package:professional_grupo_vista_app/providers/user_provider.dart';
 import 'package:professional_grupo_vista_app/widgets/custom_alert_dialog.dart';
-import 'package:professional_grupo_vista_app/widgets/custom_buttom.dart';
+import 'package:professional_grupo_vista_app/widgets/custom_button.dart';
 import 'package:professional_grupo_vista_app/widgets/custom_input.dart';
 import 'package:provider/provider.dart';
 
@@ -189,14 +189,21 @@ class RegisterPage extends StatelessWidget {
           context,
           'Campos vacíos',
           'Los campos obligatorios no pueden estar vacíos. Por favor revise los campos e intente nuevamente',
-          'Aceptar');
+          '',
+          'Aceptar',
+          () => Navigator.pop(context));
     } else {
       userProvider
           .register(name, id, address, email, password, profession, specialty)
           .then((value) => value == 'Registration success'
               ? Navigator.pop(context)
               : CustomAlertDialog().showCustomDialog(
-                  context, 'Registro incorrecto', value, 'Aceptar'));
+                  context,
+                  'Registro incorrecto',
+                  value,
+                  '',
+                  'Aceptar',
+                  () => Navigator.pop(context)));
     }
   }
 
@@ -207,7 +214,9 @@ class RegisterPage extends StatelessWidget {
           context,
           'Campos vacíos',
           'Los campos obligatorios no pueden estar vacíos. Por favor revise los campos e intente nuevamente',
-          'Aceptar');
+          '',
+          'Aceptar',
+          () => Navigator.pop(context));
     } else {
       ProfessionalsProvider.editProfessional(
               name, id, address, profession, specialty, email)
@@ -217,7 +226,9 @@ class RegisterPage extends StatelessWidget {
                   context,
                   'Error al actualizar datos',
                   'Error al actualizar datos del profesional. Por favor revise los campos e intente nuevamente',
-                  'Aceptar'));
+                  '',
+                  'Aceptar',
+                  () => Navigator.pop(context)));
     }
   }
 }

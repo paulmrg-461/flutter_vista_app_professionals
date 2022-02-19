@@ -125,7 +125,9 @@ class ProfileTab extends StatelessWidget {
                                     context,
                                     'Ha ocurrido un error',
                                     'Ha ocurrido un error al cerrar sesión, por favor intente nuevamente.',
-                                    'Aceptar'));
+                                    '',
+                                    'Aceptar',
+                                    () => Navigator.pop(context)));
                             break;
                           case 1:
                             Navigator.pushNamed(context, 'about');

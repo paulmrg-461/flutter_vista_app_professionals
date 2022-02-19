@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:professional_grupo_vista_app/models/professional_model.dart';
 import 'package:professional_grupo_vista_app/models/service_request_model.dart';
+import 'package:professional_grupo_vista_app/providers/service_request_provider.dart';
+import 'package:professional_grupo_vista_app/widgets/custom_alert_dialog.dart';
 
 class ServiceRequestListItem extends StatelessWidget {
   final ServiceRequestModel? serviceRequestModel;
-  const ServiceRequestListItem({Key? key, @required this.serviceRequestModel})
+  final ProfessionalModel? professionalModel;
+  const ServiceRequestListItem(
+      {Key? key,
+      @required this.serviceRequestModel,
+      @required this.professionalModel})
       : super(key: key);
 
   @override
@@ -11,7 +18,15 @@ class ServiceRequestListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 26),
       child: InkWell(
-        onTap: () => print('Mira mama me aplastaron'),
+        onTap: () => CustomAlertDialog().showCustomDialog(
+            context,
+            'Solicitud de ${serviceRequestModel!.name}',
+            'Está seguro que dese aceptar la solicitud del servicio de ${serviceRequestModel!.type}.',
+            'No',
+            'Sí',
+            () => ServiceRequestProvider.acceptService(
+                    professionalModel!, serviceRequestModel!)
+                .then((value) => print('Redirect to chat'))),
         child: Row(
           children: [
             Container(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:professional_grupo_vista_app/providers/user_provider.dart';
 import 'package:professional_grupo_vista_app/widgets/custom_alert_dialog.dart';
-import 'package:professional_grupo_vista_app/widgets/custom_buttom.dart';
+import 'package:professional_grupo_vista_app/widgets/custom_button.dart';
 import 'package:professional_grupo_vista_app/widgets/custom_input.dart';
 import 'package:provider/provider.dart';
 
@@ -124,13 +124,20 @@ class _LoginPageState extends State<LoginPage> {
           context,
           'Campos vacíos',
           'Los campos no pueden estar vacíos. Por favor revise los campos e intente nuevamente',
-          'Aceptar');
+          '',
+          'Aceptar',
+          () => Navigator.pop(context));
     } else {
       userProvider!.login(email, password).then((value) =>
           value == 'Login success'
               ? Navigator.pushReplacementNamed(context, 'home')
               : CustomAlertDialog().showCustomDialog(
-                  context, 'Ha ocurrido un error', value, 'Aceptar'));
+                  context,
+                  'Ha ocurrido un error',
+                  value,
+                  '',
+                  'Aceptar',
+                  () => Navigator.pop(context)));
     }
   }
 }

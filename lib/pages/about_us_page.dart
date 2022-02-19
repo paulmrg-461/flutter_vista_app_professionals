@@ -219,7 +219,9 @@ class AboutUsPage extends StatelessWidget {
                                       context,
                                       'Error al enviar mensaje',
                                       'Ha ocurrido un error al enviar el mensaje de Whatsapp. Por favor intente nuevamente.',
-                                      'Aceptar');
+                                      '',
+                                      'Aceptar',
+                                      () => Navigator.pop(context));
                                 }
                               },
                               child: const Text(
