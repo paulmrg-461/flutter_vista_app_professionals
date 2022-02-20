@@ -28,10 +28,10 @@ class ServiceRequestProvider {
           ServiceRequestModel serviceRequestModel) =>
       messages
           .doc(serviceRequestModel.type)
-          .collection('${professionalModel.email}|${serviceRequestModel.email}')
+          .collection('${serviceRequestModel.email}')
           .doc()
           .set({
-            'title': 'Tienes un mensaje de ${professionalModel.name}',
+            'title': professionalModel.name,
             'body':
                 'Hola ${serviceRequestModel.name}, mucho gusto. Mi nombre es ${professionalModel.name} y estoy dispuesto a atender tu solicitud de ${serviceRequestModel.type}... Cuéntame en qué puedo colaborarte!',
             'isProfessional': true,

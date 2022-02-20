@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:professional_grupo_vista_app/models/professional_model.dart';
+import 'package:professional_grupo_vista_app/pages/tabs/chats_tab.dart';
 import 'package:professional_grupo_vista_app/pages/tabs/professionals_tab.dart';
 import 'package:professional_grupo_vista_app/pages/tabs/profile_tab.dart';
 import 'package:professional_grupo_vista_app/pages/tabs/service_request_tab.dart';
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
       ServiceRequestTab(
         professionalModel: _professionalModel,
       ),
-      ProfileTab(
+      ChatsTab(
         professionalModel: _professionalModel,
       ),
       const UsersTab(),
