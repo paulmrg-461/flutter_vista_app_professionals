@@ -27,18 +27,21 @@ class ServiceRequestProvider {
   static Future<bool> acceptService(ProfessionalModel professionalModel,
           ServiceRequestModel serviceRequestModel) =>
       messages
-          .doc(serviceRequestModel.type)
-          .collection('${serviceRequestModel.email}')
-          .doc()
-          .set({
-            'title': professionalModel.name,
-            'body':
+          .doc(serviceRequestModel.email)
+          .collection('userMessages')
+          .add({
+            'message':
                 'Hola ${serviceRequestModel.name}, mucho gusto. Mi nombre es ${professionalModel.name} y estoy dispuesto a atender tu solicitud de ${serviceRequestModel.type}... Cuéntame en qué puedo colaborarte!',
             'isProfessional': true,
             'senderId': professionalModel.email,
-            'photoUrl': professionalModel.photoUrl,
+            'professionalName': professionalModel.name,
+            'professionalEmail': professionalModel.email,
+            'professionalPhotoUrl': professionalModel.photoUrl,
+            'userName': serviceRequestModel.name,
+            'userEmail': serviceRequestModel.email,
+            'userPhotoUrl': serviceRequestModel.photoUrl,
             'receiverId': serviceRequestModel.email,
-            'seen': '0',
+            'seen': false,
             'date': DateTime.now(),
             'type': serviceRequestModel.type,
           })

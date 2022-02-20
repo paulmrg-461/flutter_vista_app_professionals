@@ -1,22 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageModel {
-  final String? title;
-  final String? body;
+  final String? userName;
+  final String? professionalName;
+  final String? userEmail;
+  final String? professionalEmail;
+  final String? message;
   final bool? isProfessional;
   final bool? seen;
-  final String? photoUrl;
+  final String? professionalPhotoUrl;
+  final String? userPhotoUrl;
   final DateTime? date;
   final String? senderId;
   final String? receiverId;
   final String? type;
 
   MessageModel({
-    this.title,
-    this.body,
+    this.userName,
+    this.professionalName,
+    this.userEmail,
+    this.professionalEmail,
+    this.message,
     this.isProfessional,
     this.seen,
-    this.photoUrl,
+    this.professionalPhotoUrl,
+    this.userPhotoUrl,
     this.date,
     this.senderId,
     this.receiverId,
@@ -25,12 +33,25 @@ class MessageModel {
 
   MessageModel.fromJson(Map<String, Object?> json)
       : this(
-          title: (json['title'] != null) ? json['title']! as String : '',
-          body: (json['body'] != null) ? json['body']! as String : '',
+          userName:
+              (json['userName'] != null) ? json['userName']! as String : '',
+          professionalName: (json['professionalName'] != null)
+              ? json['professionalName']! as String
+              : '',
+          userEmail:
+              (json['userEmail'] != null) ? json['userEmail']! as String : '',
+          professionalEmail: (json['professionalEmail'] != null)
+              ? json['professionalEmail']! as String
+              : '',
+          message: (json['message'] != null) ? json['message']! as String : '',
           isProfessional: json['isProfessional']! as bool,
-          seen: json['seen'] == '0' ? false : true,
-          photoUrl:
-              (json['photoUrl'] != null) ? json['photoUrl']! as String : '',
+          seen: json['seen']! as bool,
+          professionalPhotoUrl: (json['professionalPhotoUrl'] != null)
+              ? json['professionalPhotoUrl']! as String
+              : '',
+          userPhotoUrl: (json['userPhotoUrl'] != null)
+              ? json['userPhotoUrl']! as String
+              : '',
           date: (json['date']! as Timestamp).toDate(),
           senderId:
               (json['senderId'] != null) ? json['senderId']! as String : '',
@@ -40,11 +61,15 @@ class MessageModel {
         );
   Map<String, Object?> toJson() {
     return {
-      'title': title,
-      'body': body,
+      'userName': userName,
+      'professionalName': professionalName,
+      'userEmail': userEmail,
+      'professionalEmail': professionalEmail,
+      'body': message,
       'isProfessional': isProfessional,
       'seen': seen,
-      'photoUrl': photoUrl,
+      'professionalPhotoUrl': professionalPhotoUrl,
+      'userPhotoUrl': userPhotoUrl,
       'date': date,
       'senderId': senderId,
       'receiverId': receiverId,
