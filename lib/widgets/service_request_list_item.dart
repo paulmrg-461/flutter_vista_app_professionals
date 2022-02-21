@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:professional_grupo_vista_app/models/message_model.dart';
 import 'package:professional_grupo_vista_app/models/professional_model.dart';
 import 'package:professional_grupo_vista_app/models/service_request_model.dart';
+import 'package:professional_grupo_vista_app/pages/chat_page.dart';
 import 'package:professional_grupo_vista_app/providers/service_request_provider.dart';
 import 'package:professional_grupo_vista_app/widgets/custom_alert_dialog.dart';
 
@@ -15,6 +17,20 @@ class ServiceRequestListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MessageModel messageModel = MessageModel(
+      date: DateTime.now(),
+      isProfessional: true,
+      senderId: professionalModel!.email,
+      receiverId: serviceRequestModel!.email,
+      professionalName: professionalModel!.name,
+      professionalEmail: professionalModel!.email,
+      professionalPhotoUrl: professionalModel!.photoUrl,
+      userName: serviceRequestModel!.name,
+      userEmail: serviceRequestModel!.email,
+      userPhotoUrl: serviceRequestModel!.photoUrl,
+      seen: false,
+      type: serviceRequestModel!.type,
+    );
     return Padding(
       padding: const EdgeInsets.only(bottom: 26),
       child: InkWell(
@@ -25,8 +41,17 @@ class ServiceRequestListItem extends StatelessWidget {
             'No',
             'Sí',
             () => ServiceRequestProvider.acceptService(
-                    professionalModel!, serviceRequestModel!)
-                .then((value) => print('Redirect to chat'))),
+                        professionalModel!, serviceRequestModel!)
+                    .then((value) {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatPage(
+                            professionalModel: professionalModel,
+                            messageModel: messageModel),
+                      ));
+                })),
         child: Row(
           children: [
             Container(

@@ -65,7 +65,7 @@ class MessageModel {
       'professionalName': professionalName,
       'userEmail': userEmail,
       'professionalEmail': professionalEmail,
-      'body': message,
+      'message': message,
       'isProfessional': isProfessional,
       'seen': seen,
       'professionalPhotoUrl': professionalPhotoUrl,

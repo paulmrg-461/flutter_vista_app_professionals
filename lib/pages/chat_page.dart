@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:professional_grupo_vista_app/models/message_model.dart';
 import 'package:professional_grupo_vista_app/models/professional_model.dart';
 import 'package:professional_grupo_vista_app/providers/messages_provider.dart';
+import 'package:professional_grupo_vista_app/widgets/chat_message.dart';
 
 class ChatPage extends StatefulWidget {
   final ProfessionalModel? professionalModel;
@@ -41,6 +43,85 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             //   itemBuilder: (_, i) => _messages[i],
             //   reverse: true,
             // )),
+            Flexible(
+              child: StreamBuilder<QuerySnapshot<MessageModel>>(
+                stream:
+                    MessagesProvider.getChatroomMessages(widget.messageModel!),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot<MessageModel>> snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(horizontal: 22),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            color: Colors.white10,
+                            borderRadius: BorderRadius.circular(22)),
+                        child: const Text(
+                            'Ha ocurrido un error al cargar los mensajes. Por favor intenta nuevamente.',
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400)),
+                      ),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xffD6BA5E),
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasData) {
+                    final List<ChatMessage> messagesList = snapshot.data!.docs
+                        .map((DocumentSnapshot<MessageModel> document) {
+                      MessageModel msg = document.data()!;
+                      print(msg.message);
+                      return ChatMessage(
+                          text: msg.message,
+                          isProfessional: msg.isProfessional,
+                          date:
+                              '${msg.date!.day.toString().padLeft(2, '0')}/${msg.date!.month.toString().padLeft(2, '0')}/${msg.date!.year.toString()} - ${msg.date!.hour.toString().padLeft(2, '0')}:${msg.date!.minute.toString().padLeft(2, '0')}');
+                    }).toList();
+
+                    if (messagesList.isEmpty) {
+                      return Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 22, vertical: 36),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            color: Colors.white10,
+                            borderRadius: BorderRadius.circular(22)),
+                        child:
+                            const Text('No hay mensajes disponibles este chat.',
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22,
+                                    // letterSpacing: 0.4,
+                                    fontWeight: FontWeight.w400)),
+                      );
+                    } else {
+                      print(messagesList);
+                      return ListView(
+                          physics: const BouncingScrollPhysics(),
+                          reverse: true,
+                          children: messagesList);
+                    }
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Color(0xffD6BA5E),
+                    ),
+                  );
+                },
+              ),
+            ),
             const Divider(
               height: 1,
             ),

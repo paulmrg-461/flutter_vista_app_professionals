@@ -23,7 +23,8 @@ class MessagesProvider {
                 return FirebaseFirestore.instance
                     .doc('messages/${userModel.email}')
                     .collection('userMessages')
-                    .where('senderId', isEqualTo: professionalModel.email)
+                    .where('professionalEmail',
+                        isEqualTo: professionalModel.email)
                     .orderBy('date', descending: true)
                     .limit(1)
                     .withConverter<MessageModel>(
@@ -32,6 +33,21 @@ class MessagesProvider {
                         toFirestore: (messages, _) => messages.toJson())
                     .snapshots();
               }));
+
+  static Stream<QuerySnapshot<MessageModel>> getChatroomMessages(
+          MessageModel messageModel) =>
+      FirebaseFirestore.instance
+          .doc('messages/${messageModel.userEmail}')
+          .collection('userMessages')
+          .where('professionalEmail', isEqualTo: messageModel.professionalEmail)
+          .where('userEmail', isEqualTo: messageModel.userEmail)
+          .orderBy('date', descending: true)
+          .withConverter<MessageModel>(
+              fromFirestore: (snapshot, _) =>
+                  MessageModel.fromJson(snapshot.data()!),
+              toFirestore: (messages, _) => messages.toJson())
+          .snapshots();
+
   static void sendNewMessage(MessageModel messageModel) => messages
       .doc(messageModel.userEmail)
       .collection('userMessages')
