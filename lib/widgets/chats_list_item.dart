@@ -63,7 +63,7 @@ class ChatListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${messageModel!.date!}',
+                      '${messageModel!.date!.day.toString().padLeft(2, '0')}/${messageModel!.date!.month.toString().padLeft(2, '0')}/${messageModel!.date!.year.toString()} - ${messageModel!.date!.hour.toString().padLeft(2, '0')}:${messageModel!.date!.minute.toString().padLeft(2, '0')}',
                       style: TextStyle(
                           fontSize: 14,
                           color: Colors.white.withOpacity(0.85),

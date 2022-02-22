@@ -170,29 +170,36 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                         fontWeight: FontWeight.w600),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 6),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                              color: Colors.green.withOpacity(0.8),
-                              shape: BoxShape.circle),
-                        ),
-                        const SizedBox(
-                          width: 6,
-                        ),
-                        Text(
-                          'Activo ahora',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white.withOpacity(0.85),
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Text(
+                        widget.messageModel!.userEmail!,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white.withOpacity(0.85),
+                            fontWeight: FontWeight.w400),
+                      )),
+                  Row(
+                    children: [
+                      Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                            color: Colors.green.withOpacity(0.8),
+                            shape: BoxShape.circle),
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        'Activo ahora',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white.withOpacity(0.85),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -311,7 +318,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
         type: widget.messageModel!.type,
         senderId: widget.professionalModel!.email,
         date: DateTime.now(),
-        receiverId: widget.messageModel!.receiverId);
+        receiverId: widget.messageModel!.userEmail);
     MessagesProvider.sendNewMessage(messageModel);
 
     // final newMessage = ChatMessage(

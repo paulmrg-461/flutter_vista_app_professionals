@@ -138,7 +138,7 @@ class ProfileTab extends StatelessWidget {
                       },
                       itemBuilder: (_) => [
                             PopupMenuItem(
-                                value: 1,
+                                value: 0,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: const [

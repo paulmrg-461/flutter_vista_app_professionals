@@ -43,6 +43,9 @@ class ChatMessage extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w400),
             ),
+            const SizedBox(
+              height: 4,
+            ),
             Text(
               date!,
               style: TextStyle(
@@ -70,10 +73,29 @@ class ChatMessage extends StatelessWidget {
               bottomLeft: Radius.circular(14),
               topRight: Radius.circular(14),
             )),
-        child: Text(
-          text!,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              text!,
+              textAlign: TextAlign.justify,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Text(
+              date!,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  color: Colors.white.withOpacity(0.5),
+                  fontSize: 11,
+                  fontWeight: FontWeight.w400),
+            ),
+          ],
         ),
       ),
     );
