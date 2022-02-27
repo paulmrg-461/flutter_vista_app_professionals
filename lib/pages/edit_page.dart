@@ -6,27 +6,40 @@ import 'package:professional_grupo_vista_app/widgets/custom_button.dart';
 import 'package:professional_grupo_vista_app/widgets/custom_input.dart';
 import 'package:provider/provider.dart';
 
-TextEditingController nameController = TextEditingController();
-TextEditingController idController = TextEditingController();
-TextEditingController addressController = TextEditingController();
-TextEditingController emailController = TextEditingController();
-TextEditingController passwordController = TextEditingController();
-TextEditingController specialtyController = TextEditingController();
-
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({
+class EditPage extends StatelessWidget {
+  final String? name;
+  final String? id;
+  final String? address;
+  final String? email;
+  final String? profession;
+  final String? specialty;
+  const EditPage({
     Key? key,
+    this.name = '',
+    this.id = '',
+    this.address = '',
+    this.email = '',
+    this.profession = '',
+    this.specialty = '',
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
+    TextEditingController nameController = TextEditingController(text: name);
+    TextEditingController idController = TextEditingController(text: id);
+    TextEditingController addressController =
+        TextEditingController(text: address);
+    TextEditingController emailController = TextEditingController(text: email);
+
+    TextEditingController specialtyController =
+        TextEditingController(text: specialty);
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff1B1B1B),
         appBar: AppBar(
           title: Text(
-            'Registrar professional',
+            'Editar profesional',
             style: const TextStyle(color: Colors.white),
           ),
         ),
@@ -39,38 +52,6 @@ class RegisterPage extends StatelessWidget {
                 color: Colors.white10, borderRadius: BorderRadius.circular(22)),
             child: Column(
               children: [
-                CustomInput(
-                  hintText: 'Nombre completo *',
-                  textController: nameController,
-                  icon: Icons.person_outline,
-                  textInputType: TextInputType.name,
-                  textCapitalization: TextCapitalization.words,
-                  borderRadius: 8,
-                  backgroundColor: Colors.black54,
-                  borderColor: const Color(0xffD6BA5E),
-                  fontColor: Colors.white,
-                ),
-                CustomInput(
-                  hintText: 'Cédula *',
-                  textController: idController,
-                  icon: Icons.account_box_outlined,
-                  textInputType: TextInputType.number,
-                  borderRadius: 8,
-                  backgroundColor: Colors.black54,
-                  borderColor: const Color(0xffD6BA5E),
-                  fontColor: Colors.white,
-                ),
-                CustomInput(
-                  hintText: 'Dirección *',
-                  textController: addressController,
-                  icon: Icons.location_on_outlined,
-                  textInputType: TextInputType.text,
-                  textCapitalization: TextCapitalization.words,
-                  borderRadius: 8,
-                  backgroundColor: Colors.black54,
-                  borderColor: const Color(0xffD6BA5E),
-                  fontColor: Colors.white,
-                ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: DecoratedBox(
@@ -143,42 +124,51 @@ class RegisterPage extends StatelessWidget {
                   fontColor: Colors.white,
                 ),
                 CustomInput(
-                  hintText: 'Correo electrónico *',
-                  textController: emailController,
-                  icon: Icons.email_outlined,
-                  textInputType: TextInputType.emailAddress,
+                  hintText: 'Nombre completo *',
+                  textController: nameController,
+                  icon: Icons.person_outline,
+                  textInputType: TextInputType.name,
+                  textCapitalization: TextCapitalization.words,
                   borderRadius: 8,
                   backgroundColor: Colors.black54,
                   borderColor: const Color(0xffD6BA5E),
                   fontColor: Colors.white,
                 ),
                 CustomInput(
-                  hintText: 'Contraseña',
-                  textController: passwordController,
-                  icon: Icons.lock_outline_rounded,
-                  obscureText: true,
-                  passwordVisibility: true,
+                  hintText: 'Cédula *',
+                  textController: idController,
+                  icon: Icons.account_box_outlined,
+                  textInputType: TextInputType.number,
+                  borderRadius: 8,
+                  backgroundColor: Colors.black54,
+                  borderColor: const Color(0xffD6BA5E),
+                  fontColor: Colors.white,
+                ),
+                CustomInput(
+                  hintText: 'Dirección *',
+                  textController: addressController,
+                  icon: Icons.location_on_outlined,
+                  textInputType: TextInputType.text,
+                  textCapitalization: TextCapitalization.words,
                   borderRadius: 8,
                   backgroundColor: Colors.black54,
                   borderColor: const Color(0xffD6BA5E),
                   fontColor: Colors.white,
                 ),
                 CustomButton(
-                    text: 'Registrar',
+                    text: 'Guardar',
                     width: double.infinity,
                     fontColor: const Color(0xff211915),
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     backgroundColor: const Color(0xffD6BA5E),
-                    onPressed: () => _register(
+                    onPressed: () => _edit(
                         nameController.text.trim(),
                         idController.text.trim(),
                         addressController.text.trim(),
-                        emailController.text.trim().toLowerCase(),
-                        passwordController.text.trim(),
                         userProvider.professionSelected,
                         specialtyController.text.trim(),
-                        userProvider,
+                        emailController.text.trim().toLowerCase(),
                         context)),
               ],
             ),
@@ -186,44 +176,6 @@ class RegisterPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _register(
-      String name,
-      String id,
-      String address,
-      String email,
-      String password,
-      String profession,
-      String specialty,
-      UserProvider userProvider,
-      BuildContext context) {
-    if (name == '' ||
-        email == '' ||
-        password == '' ||
-        id == '' ||
-        address == '' ||
-        profession == '') {
-      CustomAlertDialog().showCustomDialog(
-          context,
-          'Campos vacíos',
-          'Los campos obligatorios no pueden estar vacíos. Por favor revise los campos e intente nuevamente',
-          '',
-          'Aceptar',
-          () => Navigator.pop(context));
-    } else {
-      userProvider
-          .register(name, id, address, email, password, profession, specialty)
-          .then((value) => value == 'Registration success'
-              ? Navigator.pop(context)
-              : CustomAlertDialog().showCustomDialog(
-                  context,
-                  'Registro incorrecto',
-                  value,
-                  '',
-                  'Aceptar',
-                  () => Navigator.pop(context)));
-    }
   }
 
   void _edit(String name, String id, String address, String profession,

@@ -18,6 +18,13 @@ class UserProvider with ChangeNotifier {
       FirebaseFirestore.instance.collection('professionals');
   late FirebaseMessaging messaging;
 
+  String _professionSelected = 'Abogados';
+  String get professionSelected => _professionSelected;
+  set professionSelected(professionSelected) {
+    _professionSelected = professionSelected;
+    notifyListeners();
+  }
+
   Future<String> login(String email, String password) async {
     _isLogging = true;
     try {

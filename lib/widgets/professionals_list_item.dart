@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:professional_grupo_vista_app/models/professional_model.dart';
-import 'package:professional_grupo_vista_app/pages/register_page.dart';
+import 'package:professional_grupo_vista_app/pages/edit_page.dart';
 import 'package:professional_grupo_vista_app/providers/professionals_provider.dart';
 import 'package:professional_grupo_vista_app/widgets/custom_alert_dialog.dart';
 
@@ -91,8 +91,7 @@ class ProfessionalsListItem extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => RegisterPage(
-                                  isEditing: true,
+                                builder: (context) => EditPage(
                                   name: professionalModel!.name,
                                   id: professionalModel!.id,
                                   email: professionalModel!.email,
