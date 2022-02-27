@@ -18,4 +18,10 @@ class UsersProvider {
       .update({'clientEnable': action == 'isEnabled' ? false : true})
       .then((value) => print("User updated"))
       .catchError((error) => print("Failed to update user: $error"));
+
+  static Future<bool> deleteUser(String email) => users
+      .doc(email)
+      .delete()
+      .then((value) => true)
+      .catchError((error) => false);
 }

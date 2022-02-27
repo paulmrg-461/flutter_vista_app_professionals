@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfessionalModel {
+  final String? uid;
   final String? email;
   final String? name;
   final String? address;
@@ -14,6 +15,7 @@ class ProfessionalModel {
   final List<dynamic>? deviceTokens;
 
   ProfessionalModel({
+    this.uid,
     this.email,
     this.name,
     this.address,
@@ -29,6 +31,7 @@ class ProfessionalModel {
 
   ProfessionalModel.fromJson(Map<String, Object?> json)
       : this(
+          uid: (json['uid'] != null) ? json['uid']! as String : '',
           email: (json['email'] != null) ? json['email']! as String : '',
           name: (json['name'] != null) ? json['name']! as String : '',
           address: (json['address'] != null) ? json['address']! as String : '',
@@ -48,6 +51,7 @@ class ProfessionalModel {
         );
   Map<String, Object?> toJson() {
     return {
+      'uid': uid,
       'email': email,
       'name': name,
       'address': address,

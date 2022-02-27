@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:professional_grupo_vista_app/models/user_model.dart';
 import 'package:professional_grupo_vista_app/providers/users_provider.dart';
+import 'package:professional_grupo_vista_app/widgets/custom_alert_dialog.dart';
 
 class UsersListItem extends StatelessWidget {
   final UserModel? userModel;
@@ -82,7 +83,15 @@ class UsersListItem extends StatelessWidget {
                               userModel!.email!);
                           break;
                         case 1:
-                          print('Mira mama me aplastaron el more');
+                          CustomAlertDialog().showCustomDialog(
+                              context,
+                              'Eliminar a ${userModel!.name}',
+                              'Está seguro que dese eliminar al usuario ${userModel!.name}.',
+                              'No',
+                              'Sí', () {
+                            UsersProvider.deleteUser(userModel!.email!);
+                            Navigator.of(context).pop();
+                          });
                           break;
                         default:
                           print(value);
@@ -119,14 +128,14 @@ class UsersListItem extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: const [
                                   Icon(
-                                    Icons.edit,
+                                    Icons.delete,
                                     size: 20,
                                     color: Colors.black87,
                                   ),
                                   SizedBox(
                                     width: 8,
                                   ),
-                                  Text('Editar'),
+                                  Text('Eliminar'),
                                 ],
                               )),
                         ]),

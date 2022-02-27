@@ -80,7 +80,6 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                     final List<ChatMessage> messagesList = snapshot.data!.docs
                         .map((DocumentSnapshot<MessageModel> document) {
                       MessageModel msg = document.data()!;
-                      print(msg.message);
                       return ChatMessage(
                           text: msg.message,
                           isProfessional: msg.isProfessional,
@@ -206,7 +205,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             ),
           ),
           IconButton(
-              onPressed: () => print("Mira mama me aplastaron"),
+              onPressed: () => print("More"),
               icon: const Icon(
                 Icons.more_vert_rounded,
                 color: Colors.white,
@@ -229,7 +228,8 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                 offset: const Offset(0, 5),
                 blurRadius: 5)
           ]),
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
+      margin:
+          const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20, top: 8),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
       child: Row(
         children: [

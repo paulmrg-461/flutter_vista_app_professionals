@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:professional_grupo_vista_app/models/professional_model.dart';
 import 'package:professional_grupo_vista_app/pages/register_page.dart';
 import 'package:professional_grupo_vista_app/providers/professionals_provider.dart';
+import 'package:professional_grupo_vista_app/widgets/custom_alert_dialog.dart';
 
 class ProfessionalsListItem extends StatelessWidget {
   final ProfessionalModel? professionalModel;
@@ -101,6 +102,18 @@ class ProfessionalsListItem extends StatelessWidget {
                                 ),
                               ));
                           break;
+                        case 2:
+                          CustomAlertDialog().showCustomDialog(
+                              context,
+                              'Eliminar a ${professionalModel!.name}',
+                              'Está seguro que dese eliminar al profesional ${professionalModel!.name}.',
+                              'No',
+                              'Sí', () {
+                            ProfessionalsProvider.deleteProfessional(
+                                professionalModel!.email!);
+                            Navigator.of(context).pop();
+                          });
+                          break;
                         default:
                           print(value);
                       }
@@ -144,6 +157,22 @@ class ProfessionalsListItem extends StatelessWidget {
                                     width: 8,
                                   ),
                                   Text('Editar'),
+                                ],
+                              )),
+                          PopupMenuItem(
+                              value: 2,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: const [
+                                  Icon(
+                                    Icons.delete,
+                                    size: 20,
+                                    color: Colors.black87,
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text('Eliminar'),
                                 ],
                               )),
                         ]),

@@ -31,7 +31,6 @@ class UserProvider with ChangeNotifier {
       messaging = FirebaseMessaging.instance;
       messaging.getToken().then((value) {
         _setFCMToken(value);
-        print('FCMToken: $value');
         professionals
             .doc(_userCredentials!.user!.email)
             .update({
@@ -62,31 +61,26 @@ class UserProvider with ChangeNotifier {
     try {
       FirebaseAuth.instanceFor(app: app)
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        messaging = FirebaseMessaging.instance;
-        messaging.getToken().then((value) {
-          _setFCMToken(value);
-          print('FCMToken: $value');
-          professionals
-              .doc(email)
-              .set({
-                'name': name,
-                'id': id,
-                'address': address,
-                'email': email,
-                'photoUrl':
-                    'https://forofarp.org/wp-content/uploads/2017/06/silueta-1.jpg',
-                'isEnable': true,
-                'isAdmin': false,
-                'registerDate': DateTime.now(),
-                'profession': profession,
-                'specialty': specialty,
-                'deviceTokens': [value]
-              })
-              .then((value) async => await app.delete())
-              .catchError(
-                  (error) => print("Failed to add professional: $error"));
-        });
+          .then((val) {
+        professionals
+            .doc(email)
+            .set({
+              'uid': val.user!.uid,
+              'name': name,
+              'id': id,
+              'address': address,
+              'email': email,
+              'photoUrl':
+                  'https://forofarp.org/wp-content/uploads/2017/06/silueta-1.jpg',
+              'isEnable': true,
+              'isAdmin': false,
+              'registerDate': DateTime.now(),
+              'profession': profession,
+              'specialty': specialty,
+              'deviceTokens': []
+            })
+            .then((value) async => await app.delete())
+            .catchError((error) => print("Failed to add professional: $error"));
       });
 
       return "Registration success";

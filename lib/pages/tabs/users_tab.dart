@@ -28,7 +28,7 @@ class UsersTab extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   Icon(
-                    Icons.add_circle_outline,
+                    Icons.group_outlined,
                     color: Color(0xffD6BA5E),
                     size: 38,
                   ),

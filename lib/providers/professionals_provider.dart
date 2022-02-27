@@ -35,4 +35,9 @@ class ProfessionalsProvider {
           })
           .then((value) => true)
           .catchError((error) => false);
+  static Future<bool> deleteProfessional(String email) => professionals
+      .doc(email)
+      .delete()
+      .then((value) => true)
+      .catchError((error) => false);
 }

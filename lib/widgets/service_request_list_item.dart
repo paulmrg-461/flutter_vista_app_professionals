@@ -39,19 +39,18 @@ class ServiceRequestListItem extends StatelessWidget {
             'Solicitud de ${serviceRequestModel!.name}',
             'Está seguro que dese aceptar la solicitud del servicio de ${serviceRequestModel!.type}.',
             'No',
-            'Sí',
-            () => ServiceRequestProvider.acceptService(
-                        professionalModel!, serviceRequestModel!)
-                    .then((value) {
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChatPage(
-                            professionalModel: professionalModel,
-                            messageModel: messageModel),
-                      ));
-                })),
+            'Sí', () {
+          ServiceRequestProvider.acceptService(
+              professionalModel!, serviceRequestModel!);
+          Navigator.of(context).pop();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatPage(
+                    professionalModel: professionalModel,
+                    messageModel: messageModel),
+              ));
+        }),
         child: Row(
           children: [
             Container(

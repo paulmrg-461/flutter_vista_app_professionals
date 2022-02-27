@@ -131,21 +131,33 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getBody(ProfessionalModel _professionalModel) {
-    List<Widget> pages = [
-      ServiceRequestTab(
-        professionalModel: _professionalModel,
-      ),
-      ChatsTab(
-        professionalModel: _professionalModel,
-      ),
-      const UsersTab(),
-      ProfessionalsTab(
-        professionalModel: _professionalModel,
-      ),
-      ProfileTab(
-        professionalModel: _professionalModel,
-      ),
-    ];
+    final List<Widget> pages = _professionalModel.isAdmin!
+        ? [
+            ServiceRequestTab(
+              professionalModel: _professionalModel,
+            ),
+            ChatsTab(
+              professionalModel: _professionalModel,
+            ),
+            const UsersTab(),
+            ProfessionalsTab(
+              professionalModel: _professionalModel,
+            ),
+            ProfileTab(
+              professionalModel: _professionalModel,
+            ),
+          ]
+        : [
+            ServiceRequestTab(
+              professionalModel: _professionalModel,
+            ),
+            ChatsTab(
+              professionalModel: _professionalModel,
+            ),
+            ProfileTab(
+              professionalModel: _professionalModel,
+            ),
+          ];
     return IndexedStack(
       index: _currentIndex,
       children: pages,

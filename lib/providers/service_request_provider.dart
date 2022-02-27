@@ -31,7 +31,7 @@ class ServiceRequestProvider {
           .collection('userMessages')
           .add({
             'message':
-                'Hola ${serviceRequestModel.name}, mucho gusto. Mi nombre es ${professionalModel.name} y estoy dispuesto a atender tu solicitud de ${serviceRequestModel.type}... Cuéntame en qué puedo colaborarte!',
+                'Hola ${serviceRequestModel.name}, mucho gusto. Mi nombre es ${professionalModel.name} y estoy dispuesto a atender tu solicitud de ${serviceRequestModel.type}... ¿cuéntame en qué puedo colaborarte?',
             'isProfessional': true,
             'senderId': professionalModel.email,
             'professionalName': professionalModel.name,

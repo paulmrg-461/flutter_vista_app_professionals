@@ -5,6 +5,7 @@ import 'package:professional_grupo_vista_app/models/professional_model.dart';
 import 'package:professional_grupo_vista_app/models/service_request_model.dart';
 import 'package:professional_grupo_vista_app/providers/service_request_provider.dart';
 import 'package:professional_grupo_vista_app/widgets/service_request_list_item.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServiceRequestTab extends StatelessWidget {
   final ProfessionalModel? professionalModel;
@@ -41,85 +42,110 @@ class ServiceRequestTab extends StatelessWidget {
               const SizedBox(
                 height: 22.0,
               ),
-              StreamBuilder<QuerySnapshot<ServiceRequestModel>>(
-                stream: ServiceRequestProvider.getAllServiceRequests(
-                    professionalModel!.profession!),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot<ServiceRequestModel>>
-                        snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(horizontal: 22),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                            color: Colors.white10,
-                            borderRadius: BorderRadius.circular(22)),
-                        child: const Text(
-                            'Ha ocurrido un error al cargar las solicitudes de servicio. Por favor intenta nuevamente.',
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                // letterSpacing: 0.4,
-                                fontWeight: FontWeight.w400)),
-                      ),
-                    );
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xffD6BA5E),
-                      ),
-                    );
-                  }
+              professionalModel!.isEnable!
+                  ? StreamBuilder<QuerySnapshot<ServiceRequestModel>>(
+                      stream: ServiceRequestProvider.getAllServiceRequests(
+                          professionalModel!.profession!),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot<ServiceRequestModel>>
+                              snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Container(
+                              width: double.infinity,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 22),
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                  color: Colors.white10,
+                                  borderRadius: BorderRadius.circular(22)),
+                              child: const Text(
+                                  'Ha ocurrido un error al cargar las solicitudes de servicio. Por favor intenta nuevamente.',
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      // letterSpacing: 0.4,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                          );
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Color(0xffD6BA5E),
+                            ),
+                          );
+                        }
 
-                  if (snapshot.hasData) {
-                    final List<ServiceRequestListItem> requestsList = snapshot
-                        .data!.docs
-                        .map((DocumentSnapshot<ServiceRequestModel> document) {
-                      ServiceRequestModel serviceRequestModel =
-                          document.data()!;
-                      return ServiceRequestListItem(
-                        serviceRequestModel: serviceRequestModel,
-                        professionalModel: professionalModel,
-                      );
-                    }).toList();
+                        if (snapshot.hasData) {
+                          final List<ServiceRequestListItem> requestsList =
+                              snapshot.data!.docs.map(
+                                  (DocumentSnapshot<ServiceRequestModel>
+                                      document) {
+                            ServiceRequestModel serviceRequestModel =
+                                document.data()!;
+                            return ServiceRequestListItem(
+                              serviceRequestModel: serviceRequestModel,
+                              professionalModel: professionalModel,
+                            );
+                          }).toList();
 
-                    if (requestsList.isEmpty) {
-                      return Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 22, vertical: 36),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                            color: Colors.white10,
-                            borderRadius: BorderRadius.circular(22)),
-                        child: Text(
-                            'No hay solicitudes disponibles para ${professionalModel!.profession}.',
-                            textAlign: TextAlign.justify,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
-                                // letterSpacing: 0.4,
-                                fontWeight: FontWeight.w400)),
-                      );
-                    } else {
-                      return Expanded(
-                        child: ListView(
-                            physics: const BouncingScrollPhysics(),
-                            children: requestsList),
-                      );
-                    }
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0xffD6BA5E),
-                    ),
-                  );
-                },
-              ),
+                          if (requestsList.isEmpty) {
+                            return Container(
+                              width: double.infinity,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 22, vertical: 36),
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                  color: Colors.white10,
+                                  borderRadius: BorderRadius.circular(22)),
+                              child: Text(
+                                  'No hay solicitudes disponibles para ${professionalModel!.profession}.',
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      // letterSpacing: 0.4,
+                                      fontWeight: FontWeight.w400)),
+                            );
+                          } else {
+                            return Expanded(
+                              child: ListView(
+                                  physics: const BouncingScrollPhysics(),
+                                  children: requestsList),
+                            );
+                          }
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xffD6BA5E),
+                          ),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: InkWell(
+                        onTap: () => launch("tel://3218910268"),
+                        child: Container(
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(horizontal: 22),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: Colors.white10,
+                              borderRadius: BorderRadius.circular(22)),
+                          child: const Text(
+                              'Aún no cuentas con una suscripción activa como profesional en Vista APP. Si deseas más información, por favor comunícate al número 3218910268.',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  // letterSpacing: 0.4,
+                                  fontWeight: FontWeight.w400)),
+                        ),
+                      ),
+                    )
             ],
           ),
         ),
