@@ -87,24 +87,6 @@ class AllChatListItem extends StatelessWidget {
                 ),
               ),
             ),
-            messageModel!.seen!
-                ? Container()
-                : Container(
-                    width: 30,
-                    height: 30,
-                    decoration: const BoxDecoration(
-                      color: Color(0xffD6BA5E),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Center(
-                        child: Text(
-                      '1',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    )),
-                  ),
           ],
         ),
       ),

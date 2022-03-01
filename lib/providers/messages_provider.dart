@@ -69,6 +69,20 @@ class MessagesProvider {
               toFirestore: (messages, _) => messages.toJson())
           .snapshots();
 
+  static Future<void> updateSeenMessage(
+          String userEmail, String professionalEmail) =>
+      FirebaseFirestore.instance
+          .doc('messages/$userEmail')
+          .collection('userMessages')
+          .where('professionalEmail', isEqualTo: professionalEmail)
+          .where('senderId', isEqualTo: userEmail)
+          .get()
+          .then((msg) => msg.docs.map((doc) => FirebaseFirestore.instance
+              .doc('messages/$userEmail')
+              .collection('userMessages')
+              .doc(doc.id)
+              .set({'seen': true})));
+
   static void sendNewMessage(MessageModel messageModel) => messages
       .doc(messageModel.userEmail)
       .collection('userMessages')

@@ -73,11 +73,12 @@ class ChatListItem extends StatelessWidget {
                 ),
               ),
             ),
-            messageModel!.seen!
+            (messageModel!.receiverId != professionalModel!.email &&
+                    !messageModel!.seen!)
                 ? Container()
                 : Container(
-                    width: 30,
-                    height: 30,
+                    width: 25,
+                    height: 25,
                     decoration: const BoxDecoration(
                       color: Color(0xffD6BA5E),
                       shape: BoxShape.circle,
