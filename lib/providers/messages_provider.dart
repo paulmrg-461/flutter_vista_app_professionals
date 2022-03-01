@@ -10,6 +10,27 @@ class MessagesProvider {
   static CollectionReference users =
       FirebaseFirestore.instance.collection('users');
 
+  static Future<Iterable<Stream<QuerySnapshot<MessageModel>>>>
+      getAllLastMessages() => users
+          .withConverter<UserModel>(
+              fromFirestore: (snapshot, _) =>
+                  UserModel.fromJson(snapshot.data()!),
+              toFirestore: (messages, _) => messages.toJson())
+          .get()
+          .then((usr) => usr.docs.map((doc) {
+                final UserModel userModel = doc.data();
+                return FirebaseFirestore.instance
+                    .doc('messages/${userModel.email}')
+                    .collection('userMessages')
+                    .orderBy('date', descending: true)
+                    .limit(1)
+                    .withConverter<MessageModel>(
+                        fromFirestore: (snapshot, _) =>
+                            MessageModel.fromJson(snapshot.data()!),
+                        toFirestore: (messages, _) => messages.toJson())
+                    .snapshots();
+              }));
+
   static Future<Iterable<Stream<QuerySnapshot<MessageModel>>>> getLastMessages(
           ProfessionalModel professionalModel) =>
       users

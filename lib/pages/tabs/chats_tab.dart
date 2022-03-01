@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:professional_grupo_vista_app/models/message_model.dart';
 import 'package:professional_grupo_vista_app/models/professional_model.dart';
 import 'package:professional_grupo_vista_app/providers/messages_provider.dart';
@@ -23,19 +22,29 @@ class ChatsTab extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
-                  Text(
+                children: <Widget>[
+                  const Text(
                     'Conversaciones',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 38,
                         fontWeight: FontWeight.bold),
                   ),
-                  FaIcon(
-                    FontAwesomeIcons.edit,
-                    size: 34,
-                    color: Color(0xffD6BA5E),
-                  )
+                  professionalModel!.isAdmin!
+                      ? IconButton(
+                          onPressed: () =>
+                              Navigator.pushNamed(context, 'allChatsPage'),
+                          tooltip: 'Ver todas las conversaciones',
+                          icon: Icon(
+                            Icons.message_outlined,
+                            size: 34,
+                            color: Color(0xffD6BA5E),
+                          ))
+                      : Icon(
+                          Icons.message_outlined,
+                          size: 34,
+                          color: Color(0xffD6BA5E),
+                        ),
                 ],
               ),
               const SizedBox(
