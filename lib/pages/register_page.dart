@@ -31,6 +31,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Container(
             width: double.infinity,
             margin: const EdgeInsets.symmetric(vertical: 22, horizontal: 12),
