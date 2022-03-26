@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:is_first_run/is_first_run.dart';
 
 import 'home_page.dart';
 import 'login_page.dart';
@@ -10,6 +11,8 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    IsFirstRun.isFirstRun().then((value) =>
+        value ? Navigator.pushNamed(context, 'login') : print('Continue'));
     return Scaffold(
       backgroundColor: const Color(0xff1B1B1B),
       body: FutureBuilder(
