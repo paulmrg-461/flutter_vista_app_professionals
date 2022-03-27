@@ -24,6 +24,15 @@ class ServiceRequestProvider {
               toFirestore: (messages, _) => messages.toJson())
           .snapshots();
 
+  static Stream<QuerySnapshot<ServiceRequestModel>>
+      getAllAdminServiceRequests() => serviceRequests
+          .orderBy('dateTime', descending: true)
+          .withConverter<ServiceRequestModel>(
+              fromFirestore: (snapshot, _) =>
+                  ServiceRequestModel.fromJson(snapshot.data()!),
+              toFirestore: (messages, _) => messages.toJson())
+          .snapshots();
+
   static Future<bool> acceptService(ProfessionalModel professionalModel,
           ServiceRequestModel serviceRequestModel) =>
       messages

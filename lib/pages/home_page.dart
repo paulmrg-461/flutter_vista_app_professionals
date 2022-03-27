@@ -139,7 +139,9 @@ class _HomePageState extends State<HomePage> {
             ChatsTab(
               professionalModel: _professionalModel,
             ),
-            const UsersTab(),
+            UsersTab(
+              professionalModel: _professionalModel,
+            ),
             ProfessionalsTab(
               professionalModel: _professionalModel,
             ),

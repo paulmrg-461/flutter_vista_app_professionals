@@ -44,8 +44,10 @@ class ServiceRequestTab extends StatelessWidget {
               ),
               professionalModel!.isEnable!
                   ? StreamBuilder<QuerySnapshot<ServiceRequestModel>>(
-                      stream: ServiceRequestProvider.getAllServiceRequests(
-                          professionalModel!.profession!),
+                      stream: professionalModel!.isAdmin!
+                          ? ServiceRequestProvider.getAllAdminServiceRequests()
+                          : ServiceRequestProvider.getAllServiceRequests(
+                              professionalModel!.profession!),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot<ServiceRequestModel>>
                               snapshot) {
