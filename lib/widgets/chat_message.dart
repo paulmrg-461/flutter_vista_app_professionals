@@ -68,12 +68,12 @@ class ChatMessage extends StatelessWidget {
                       ? Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
-                              onTap: () => _downloadUrl(context, downloadUrl!),
-                              child: Image(image: NetworkImage(downloadUrl!))),
+                              onTap: () => _downloadUrl(context, downloadUrl),
+                              child: Image(image: NetworkImage(downloadUrl))),
                         )
                       : text == 'Audio'
                           ? AudioPlayerWidget(
-                              downloadUrl: downloadUrl!,
+                              downloadUrl: downloadUrl,
                               myMessage: true,
                             )
                           : Container(
@@ -81,7 +81,7 @@ class ChatMessage extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
                                   onTap: () =>
-                                      _downloadUrl(context, downloadUrl!),
+                                      _downloadUrl(context, downloadUrl),
                                   child: Icon(
                                     Icons.download_for_offline_outlined,
                                     color: Colors.white60,
@@ -158,14 +158,12 @@ class ChatMessage extends StatelessWidget {
                         ? Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
-                                onTap: () =>
-                                    _downloadUrl(context, downloadUrl!),
-                                child:
-                                    Image(image: NetworkImage(downloadUrl!))),
+                                onTap: () => _downloadUrl(context, downloadUrl),
+                                child: Image(image: NetworkImage(downloadUrl))),
                           )
                         : text == 'Audio'
                             ? AudioPlayerWidget(
-                                downloadUrl: downloadUrl!,
+                                downloadUrl: downloadUrl,
                                 myMessage: false,
                               )
                             : Container(
@@ -173,7 +171,7 @@ class ChatMessage extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: InkWell(
                                     onTap: () =>
-                                        _downloadUrl(context, downloadUrl!),
+                                        _downloadUrl(context, downloadUrl),
                                     child: Icon(
                                       Icons.download_for_offline_outlined,
                                       color: Colors.white60,
