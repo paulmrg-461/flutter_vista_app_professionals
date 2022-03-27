@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:professional_grupo_vista_app/models/message_model.dart';
 import 'package:professional_grupo_vista_app/models/professional_model.dart';
 import 'package:professional_grupo_vista_app/models/user_model.dart';
 
 class MessagesProvider {
+  static firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   static CollectionReference messages =
       FirebaseFirestore.instance.collection('messages');
@@ -87,4 +93,16 @@ class MessagesProvider {
       .doc(messageModel.userEmail)
       .collection('userMessages')
       .add(messageModel.toJson());
+
+  static Future<String> uploadFile(File file, String path) async {
+    try {
+      final firebase_storage.TaskSnapshot taskSnapshot =
+          await storage.ref(path).putFile(file);
+
+      return await (await taskSnapshot).ref.getDownloadURL();
+    } on FirebaseException catch (e) {
+      print(e);
+      return 'Error';
+    }
+  }
 }

@@ -62,8 +62,9 @@ class ChatPage extends StatelessWidget {
                         .map((DocumentSnapshot<MessageModel> document) {
                       MessageModel msg = document.data()!;
                       return ChatMessage(
-                          text: msg.message,
-                          isProfessional: msg.isProfessional,
+                          text: msg.message!,
+                          isProfessional: msg.isProfessional!,
+                          downloadUrl: msg.downloadUrl!,
                           date:
                               '${msg.date!.day.toString().padLeft(2, '0')}/${msg.date!.month.toString().padLeft(2, '0')}/${msg.date!.year.toString()} - ${msg.date!.hour.toString().padLeft(2, '0')}:${msg.date!.minute.toString().padLeft(2, '0')}');
                     }).toList();

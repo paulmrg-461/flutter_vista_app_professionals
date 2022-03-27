@@ -1,15 +1,25 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:professional_grupo_vista_app/models/professional_model.dart';
+import 'package:professional_grupo_vista_app/providers/messages_provider.dart';
 import 'package:professional_grupo_vista_app/providers/user_provider.dart';
 import 'package:professional_grupo_vista_app/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
-class ProfileTab extends StatelessWidget {
+class ProfileTab extends StatefulWidget {
   final ProfessionalModel? professionalModel;
   const ProfileTab({Key? key, @required this.professionalModel})
       : super(key: key);
 
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     final UserProvider _userProvider = Provider.of<UserProvider>(context);
@@ -51,7 +61,8 @@ class ProfileTab extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(professionalModel!.photoUrl!))),
+                            image: NetworkImage(
+                                widget.professionalModel!.photoUrl!))),
                   ),
                   Expanded(
                     child: Padding(
@@ -60,7 +71,7 @@ class ProfileTab extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            professionalModel!.name!,
+                            widget.professionalModel!.name!,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontSize: 28,
@@ -70,7 +81,7 @@ class ProfileTab extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: Text(
-                              professionalModel!.email!,
+                              widget.professionalModel!.email!,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 16,
@@ -84,7 +95,7 @@ class ProfileTab extends StatelessWidget {
                                 width: 13,
                                 height: 13,
                                 decoration: BoxDecoration(
-                                    color: professionalModel!.isEnable!
+                                    color: widget.professionalModel!.isEnable!
                                         ? Colors.green.withOpacity(0.8)
                                         : Colors.red.withOpacity(0.8),
                                     shape: BoxShape.circle),
@@ -93,7 +104,7 @@ class ProfileTab extends StatelessWidget {
                                 width: 6,
                               ),
                               Text(
-                                professionalModel!.isAdmin!
+                                widget.professionalModel!.isAdmin!
                                     ? 'Administrador Grupo Vista'
                                     : 'Profesional Grupo Vista',
                                 overflow: TextOverflow.ellipsis,
@@ -118,6 +129,12 @@ class ProfileTab extends StatelessWidget {
                       onSelected: (value) {
                         switch (value) {
                           case 0:
+                            _uploadPhoto(_userProvider);
+                            break;
+                          case 1:
+                            Navigator.pushNamed(context, 'about');
+                            break;
+                          case 2:
                             _userProvider.logout().then((value) => value
                                 ? Navigator.pushReplacementNamed(
                                     context, 'login')
@@ -128,9 +145,6 @@ class ProfileTab extends StatelessWidget {
                                     '',
                                     'Aceptar',
                                     () => Navigator.pop(context)));
-                            break;
-                          case 1:
-                            Navigator.pushNamed(context, 'about');
                             break;
                           default:
                             print(value);
@@ -143,14 +157,14 @@ class ProfileTab extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: const [
                                     Icon(
-                                      Icons.logout_rounded,
+                                      Icons.photo_outlined,
                                       size: 20,
                                       color: Colors.black87,
                                     ),
                                     SizedBox(
                                       width: 8,
                                     ),
-                                    Text('Cerrar sesión'),
+                                    Text('Cambiar foto'),
                                   ],
                                 )),
                             PopupMenuItem(
@@ -169,6 +183,22 @@ class ProfileTab extends StatelessWidget {
                                     Text('Acerca de'),
                                   ],
                                 )),
+                            PopupMenuItem(
+                                value: 2,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: const [
+                                    Icon(
+                                      Icons.logout_rounded,
+                                      size: 20,
+                                      color: Colors.black87,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text('Cerrar sesión'),
+                                  ],
+                                )),
                           ]),
                 ],
               ),
@@ -177,5 +207,25 @@ class ProfileTab extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _uploadPhoto(UserProvider _userProvider) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg'],
+    );
+
+    if (result != null) {
+      setState(() => _isLoading = true);
+      File file = File(result.files.single.path!);
+      String fileExtension = result.files.single.extension!;
+
+      final String downloadUrl = await MessagesProvider.uploadFile(file,
+          'profilePictures/${widget.professionalModel!.email}.$fileExtension');
+
+      _userProvider
+          .updateProfilePicture(widget.professionalModel!.email!, downloadUrl)
+          .then((value) => setState(() => _isLoading = false));
+    }
   }
 }

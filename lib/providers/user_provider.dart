@@ -112,6 +112,13 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+  Future<bool> updateProfilePicture(String email, String url) async =>
+      professionals
+          .doc(email)
+          .update({'photoUrl': url})
+          .then((value) => true)
+          .catchError((error) => false);
+
   Future<ProfessionalModel> getUserInformation() async {
     try {
       final userInformationRef = firestore

@@ -14,6 +14,7 @@ class MessageModel {
   final String? senderId;
   final String? receiverId;
   final String? type;
+  final String? downloadUrl;
 
   MessageModel({
     this.userName,
@@ -29,6 +30,7 @@ class MessageModel {
     this.senderId,
     this.receiverId,
     this.type,
+    this.downloadUrl,
   });
 
   MessageModel.fromJson(Map<String, Object?> json)
@@ -58,6 +60,9 @@ class MessageModel {
           receiverId:
               (json['receiverId'] != null) ? json['receiverId']! as String : '',
           type: (json['type'] != null) ? json['type']! as String : '',
+          downloadUrl: (json['downloadUrl'] != null)
+              ? json['downloadUrl']! as String
+              : '',
         );
   Map<String, Object?> toJson() {
     return {
@@ -74,6 +79,7 @@ class MessageModel {
       'senderId': senderId,
       'receiverId': receiverId,
       'type': type,
+      'downloadUrl': downloadUrl,
     };
   }
 }
